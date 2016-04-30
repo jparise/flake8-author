@@ -36,7 +36,7 @@ Install from PyPI using ``pip``:
 
 .. code-block:: sh
 
-    pip install flake8-author
+    $ pip install flake8-author
 
 The extension will be activated automatically by ``flake8``. You can verify
 that it has been loaded by inspecting the ``flake8 --version`` string.
