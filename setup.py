@@ -9,15 +9,18 @@ def get_version(filename):
     f = open(filename).read()
     return re.search("__version__ = ['\"]([^'\"]+)['\"]", f).group(1)
 
+version = get_version('flake8_author.py')
+
 setup(
     name='flake8-author',
-    version=get_version('flake8_author.py'),
+    version=version,
     description='Flake8 __author__ checker',
     long_description=open('README.rst').read(),
     author='Jon Parise',
     author_email='jon@indelible.org',
     keywords='flake8 __author__',
     url='https://github.com/jparise/flake8-author',
+    download_url='https://github.com/jparise/flake8-author/tarball/' + version,
     license='MIT',
     py_modules=['flake8_author'],
     entry_points={
