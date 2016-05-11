@@ -8,11 +8,10 @@ configurable regular expression pattern (defaults to '.*').
 """
 
 import ast
-import optparse
 import re
 
 __author__ = 'Jon Parise'
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 
 
 class Checker(object):
@@ -28,33 +27,32 @@ class Checker(object):
 
     @classmethod
     def add_options(cls, parser):
-        def pattern_callback(option, opt_str, value, parser):
-            try:
-                setattr(parser.values, option.dest, re.compile(value))
-            except re.error as e:
-                raise optparse.OptionValueError(
-                        "option {}: '{}': {}".format(opt_str, value, e))
-
         parser.add_option(
             '--author-attribute',
             default='optional',
-            type='choice',
-            choices=['optional', 'required', 'forbidden'],
             help="__author__ attribute: optional, required, forbidden")
         parser.add_option(
             '--author-pattern',
-            default=re.compile(r'.*'),
-            type='string',
-            action="callback",
-            callback=pattern_callback,
+            default=r'.*',
             help="__author__ attribute validation pattern (regex)")
         parser.config_options.append('author-attribute')
         parser.config_options.append('author-pattern')
 
     @classmethod
     def parse_options(cls, options):
-        cls.options['attribute'] = options.author_attribute
-        cls.options['pattern'] = options.author_pattern
+        choices = ('optional', 'required', 'forbidden')
+        if options.author_attribute in choices:
+            cls.options['attribute'] = options.author_attribute
+        else:
+            raise ValueError(
+                "author-attribute: '{}' must be one of: {}".format(
+                    options.author_attribute, ', '.join(choices)))
+
+        try:
+            cls.options['pattern'] = re.compile(options.author_pattern)
+        except re.error as e:
+            raise ValueError("author-pattern: '{}': {}".format(
+                options.author_pattern, e))
 
     def find_author_node(self, tree):
         for node in tree.body:

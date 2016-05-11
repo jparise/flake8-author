@@ -56,7 +56,7 @@ def test_author_forbidden_but_present():
 
 
 def test_author_invalid_attribute():
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         check('Jon Parise', attribute='invalid')
 
 
@@ -75,5 +75,5 @@ def test_author_pattern_not_matched():
 
 
 def test_author_pattern_invalid_regex():
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         check('Jon Parise', pattern=r'[[[')
