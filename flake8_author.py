@@ -45,13 +45,13 @@ class Checker(object):
             cls.options['attribute'] = options.author_attribute
         else:
             raise ValueError(
-                "author-attribute: '{}' must be one of: {}".format(
+                "author-attribute: '{0}' must be one of: {1}".format(
                     options.author_attribute, ', '.join(choices)))
 
         try:
             cls.options['pattern'] = re.compile(options.author_pattern)
         except re.error as e:
-            raise ValueError("author-pattern: '{}': {}".format(
+            raise ValueError("author-pattern: '{0}': {1}".format(
                 options.author_pattern, e))
 
     def find_author_node(self, tree):
