@@ -21,6 +21,9 @@ class Checker(object):
     options = {}
     version = __version__
 
+    # Attribute existence choices
+    attribute_choices = ('optional', 'required', 'forbidden')
+
     def __init__(self, tree, filename):
         self.tree = tree
         self.filename = filename
@@ -30,7 +33,8 @@ class Checker(object):
         parser.add_option(
             '--author-attribute',
             default='optional',
-            help="__author__ attribute: optional, required, forbidden")
+            help="__author__ attribute: {0}".format(
+                ', '.join(cls.attribute_choices)))
         parser.add_option(
             '--author-pattern',
             default=r'.*',
@@ -40,13 +44,13 @@ class Checker(object):
 
     @classmethod
     def parse_options(cls, options):
-        choices = ('optional', 'required', 'forbidden')
-        if options.author_attribute in choices:
+        if options.author_attribute in cls.attribute_choices:
             cls.options['attribute'] = options.author_attribute
         else:
             raise ValueError(
                 "author-attribute: '{0}' must be one of: {1}".format(
-                    options.author_attribute, ', '.join(choices)))
+                    options.author_attribute,
+                    ', '.join(cls.attribute_choices)))
 
         try:
             cls.options['pattern'] = re.compile(options.author_pattern)
