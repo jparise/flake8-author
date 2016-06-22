@@ -11,7 +11,7 @@ import ast
 import re
 
 __author__ = 'Jon Parise'
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 
 
 class Checker(object):
