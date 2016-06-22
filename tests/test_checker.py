@@ -1,7 +1,7 @@
 import ast
+import unittest
 
 import pep8
-import pytest
 
 from flake8_author import Checker
 
@@ -28,52 +28,49 @@ def check(author, attribute=None, pattern=None):
     return next(linter.run(), None)
 
 
-def test_author_optional():
-    assert check('', attribute='optional') is None
-    assert check('Jon Parise', attribute='optional') is None
+class TestChecker(unittest.TestCase):
 
+    def test_author_optional(self):
+        self.assertIsNone(check('', attribute='optional'))
+        self.assertIsNone(check('Jon Parise', attribute='optional'))
 
-def test_author_required():
-    assert check('Jon Parise', attribute='required') is None
+    def test_author_required(self):
+        self.assertIsNone(check('Jon Parise', attribute='required'))
 
+    def test_author_required_but_missing(self):
+        lineno, offset, message, _ = check('', attribute='required')
+        self.assertEqual(lineno, 0)
+        self.assertEqual(offset, 0)
+        self.assertTrue(message.startswith('A400'))
 
-def test_author_required_but_missing():
-    lineno, offset, message, _ = check('', attribute='required')
-    assert lineno == 0
-    assert offset == 0
-    assert message.startswith('A400')
+    def test_author_forbidden(self):
+        self.assertIsNone(check('', attribute='forbidden'))
 
+    def test_author_forbidden_but_present(self):
+        lineno, offset, message, _ = check('Jon Parise', attribute='forbidden')
+        self.assertEqual(lineno, 1)
+        self.assertEqual(offset, 0)
+        self.assertTrue(message.startswith('A401'))
 
-def test_author_forbidden():
-    assert check('', attribute='forbidden') is None
+    def test_author_invalid_attribute(self):
+        with self.assertRaises(ValueError):
+            check('Jon Parise', attribute='invalid')
 
+    def test_author_pattern(self):
+        author = 'Jon Parise <jon@example.com>'
+        self.assertIsNone(check(author))
+        self.assertIsNone(check(author, pattern=r'.*'))
 
-def test_author_forbidden_but_present():
-    lineno, offset, message, _ = check('Jon Parise', attribute='forbidden')
-    assert lineno == 1
-    assert offset == 0
-    assert message.startswith('A401')
+    def test_author_pattern_not_matched(self):
+        author = 'Jon Parise <jon@example.com>'
+        lineno, offset, message, _ = check(author, pattern=r'^[\w\s]+$')
+        self.assertEqual(lineno, 1)
+        self.assertEqual(offset, 0)
+        self.assertTrue(message.startswith('A402'))
 
+    def test_author_pattern_invalid_regex(self):
+        with self.assertRaises(ValueError):
+            check('Jon Parise', pattern=r'[[[')
 
-def test_author_invalid_attribute():
-    with pytest.raises(ValueError):
-        check('Jon Parise', attribute='invalid')
-
-
-def test_author_pattern():
-    author = 'Jon Parise <jon@example.com>'
-    assert check(author) is None
-    assert check(author, pattern=r'.*') is None
-
-
-def test_author_pattern_not_matched():
-    author = 'Jon Parise <jon@example.com>'
-    lineno, offset, message, _ = check(author, pattern=r'^[\w\s]+$')
-    assert lineno == 1
-    assert offset == 0
-    assert message.startswith('A402')
-
-
-def test_author_pattern_invalid_regex():
-    with pytest.raises(ValueError):
-        check('Jon Parise', pattern=r'[[[')
+if __name__ == '__main__':
+    unittest.main()
