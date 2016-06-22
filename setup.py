@@ -27,8 +27,9 @@ setup(
         'flake8.extension': ['A40 = flake8_author:Checker'],
     },
     install_requires=['flake8'],
-    setup_requires=['flake8', 'pytest-runner'],
-    tests_require=['flake8', 'pytest'],
+    setup_requires=['flake8'],
+    tests_require=['flake8'],
+    test_suite='tests',
     zip_safe=True,
     classifiers=[
         'Development Status :: 4 - Beta',
