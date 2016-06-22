@@ -1,15 +1,13 @@
 import ast
 import unittest
 
-import pep8
-
+from flake8.engine import get_parser
 from flake8_author import Checker
 
 
 def make_linter(code, path='example.py', argv=None):
     tree = ast.parse(code, path)
-    parser = pep8.get_parser('', '')
-    Checker.add_options(parser)
+    parser, _ = get_parser()
     options, args = parser.parse_args(argv or [])
     Checker.parse_options(options)
     return Checker(tree, path)
