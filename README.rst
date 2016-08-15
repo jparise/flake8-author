@@ -4,8 +4,8 @@ Flake8 __author__ Checker
 
 |Build Status| |PyPI Version| |Python Versions|
 
-``flake8-author`` is a `Flake8 <https://flake8.readthedocs.org/>`_ extension
-that checks Python modules for module-level ``__author__`` attributes.
+``flake8-author`` is a `Flake8 <http://flake8.pycqa.org/>`_ extension that
+checks Python modules for module-level ``__author__`` attributes.
 
 There is no official standard on ``__author__`` usage. It is used largely by
 convention. Guido had this to say `back in 2001`__:
@@ -52,13 +52,13 @@ that it has been loaded by inspecting the ``flake8 --version`` string.
 Error Codes
 -----------
 
-This extension adds three new `warnings`_ (using the ``A40`` prefix):
+This extension adds three new `error codes`_ (using the ``A40`` prefix):
 
 - ``A400``: a module-level ``__author__`` attribute is required
 - ``A401``: ``__author__`` attributes are not allowed
 - ``A402``: ``__author__`` attribute value does not match pattern
 
-.. _warnings: http://flake8.readthedocs.io/en/latest/warnings.html
+.. _error codes: http://flake8.pycqa.org/en/latest/user/error-codes.html
 
 Configuration
 -------------
@@ -69,4 +69,4 @@ file`_ or as command line arguments (e.g. ``--author-attribute=required``).
 - ``author-attribute``: "optional", "required", "forbidden" (default: optional)
 - ``author-pattern``: ``__author__`` validation pattern (default: ``.*``)
 
-.. _config file: http://flake8.readthedocs.io/en/latest/config.html
+.. _config file: http://flake8.pycqa.org/en/latest/user/configuration.html
