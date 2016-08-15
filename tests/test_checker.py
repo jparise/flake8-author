@@ -1,15 +1,15 @@
 import ast
 import unittest
 
-from flake8.engine import get_parser
+from flake8.main.application import Application
 from flake8_author import Checker
 
 
 def make_linter(code, path='example.py', argv=None):
+    app = Application()
+    app.initialize(argv)
+    Checker.parse_options(app.options)
     tree = ast.parse(code, path)
-    parser, _ = get_parser()
-    options, args = parser.parse_args(argv or [])
-    Checker.parse_options(options)
     return Checker(tree, path)
 
 
