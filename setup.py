@@ -10,12 +10,13 @@ def get_version(filename):
     return re.search("__version__ = ['\"]([^'\"]+)['\"]", f).group(1)
 
 version = get_version('flake8_author.py')
+description = open('README.rst').read() + "\n\n" + open('CHANGES.rst').read()
 
 setup(
     name='flake8-author',
     version=version,
     description='Flake8 __author__ checker',
-    long_description=open('README.rst').read(),
+    long_description=description,
     author='Jon Parise',
     author_email='jon@indelible.org',
     keywords='flake8 __author__',
