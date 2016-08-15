@@ -11,7 +11,7 @@ import ast
 import re
 
 __author__ = 'Jon Parise'
-__version__ = '1.0.2'
+__version__ = '1.1.0'
 
 
 class Checker(object):
@@ -39,8 +39,10 @@ class Checker(object):
             '--author-pattern',
             default=r'.*',
             help="__author__ attribute validation pattern (regex)")
-        parser.config_options.append('author-attribute')
-        parser.config_options.append('author-pattern')
+
+        if hasattr(parser, 'config_options'):  # flake8 < 3.0
+            parser.config_options.append('author-attribute')
+            parser.config_options.append('author-pattern')
 
     @classmethod
     def parse_options(cls, options):

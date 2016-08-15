@@ -29,11 +29,11 @@ setup(
     },
     install_requires=['flake8'],
     setup_requires=['flake8'],
-    tests_require=['flake8'],
+    tests_require=['flake8>=3.0.0'],
     test_suite='tests',
     zip_safe=True,
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
