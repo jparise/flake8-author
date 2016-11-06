@@ -30,19 +30,24 @@ class Checker(object):
 
     @classmethod
     def add_options(cls, parser):
+        extra_kwargs = {}
+        if hasattr(parser, 'config_options'):  # flake8 < 3.0
+            parser.config_options.append('author-attribute')
+            parser.config_options.append('author-pattern')
+        else:  # flake8 >= 3.0
+            extra_kwargs['parse_from_config'] = True
+
         parser.add_option(
             '--author-attribute',
             default='optional',
             help="__author__ attribute: {0}".format(
-                ', '.join(cls.attribute_choices)))
+                ', '.join(cls.attribute_choices)),
+            **extra_kwargs)
         parser.add_option(
             '--author-pattern',
             default=r'.*',
-            help="__author__ attribute validation pattern (regex)")
-
-        if hasattr(parser, 'config_options'):  # flake8 < 3.0
-            parser.config_options.append('author-attribute')
-            parser.config_options.append('author-pattern')
+            help="__author__ attribute validation pattern (regex)",
+            **extra_kwargs)
 
     @classmethod
     def parse_options(cls, options):
