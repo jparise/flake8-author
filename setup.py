@@ -9,6 +9,7 @@ def get_version(filename):
     f = open(filename).read()
     return re.search("__version__ = ['\"]([^'\"]+)['\"]", f).group(1)
 
+
 version = get_version('flake8_author.py')
 description = open('README.rst').read() + "\n\n" + open('CHANGES.rst').read()
 
