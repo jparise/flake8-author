@@ -1,6 +1,12 @@
 Changes
 =======
 
+1.1.2 (2017-01-12)
+------------------
+
+* Only apply the author regular expression pattern check when a pattern has
+  actually been configured.
+
 1.1.1 (2016-11-06)
 ------------------
 

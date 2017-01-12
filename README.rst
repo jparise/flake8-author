@@ -67,6 +67,7 @@ Configuration values are specified in the ``[flake8]`` section of your `config
 file`_ or as command line arguments (e.g. ``--author-attribute=required``).
 
 - ``author-attribute``: "optional", "required", "forbidden" (default: optional)
-- ``author-pattern``: ``__author__`` validation pattern (default: ``.*``)
+- ``author-pattern``: ``__author__`` validation `re`_ pattern (default: ``''``)
 
 .. _config file: http://flake8.pycqa.org/en/latest/user/configuration.html
+.. _re: https://docs.python.org/library/re.html

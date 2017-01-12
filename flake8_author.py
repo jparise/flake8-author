@@ -11,7 +11,7 @@ import ast
 import re
 
 __author__ = 'Jon Parise'
-__version__ = '1.1.1'
+__version__ = '1.1.2'
 
 
 class Checker(object):
@@ -45,7 +45,7 @@ class Checker(object):
             **extra_kwargs)
         parser.add_option(
             '--author-pattern',
-            default=r'.*',
+            default=r'',
             help="__author__ attribute validation pattern (regex)",
             **extra_kwargs)
 
@@ -59,11 +59,15 @@ class Checker(object):
                     options.author_attribute,
                     ', '.join(cls.attribute_choices)))
 
-        try:
-            cls.options['pattern'] = re.compile(options.author_pattern)
-        except re.error as e:
-            raise ValueError("author-pattern: '{0}': {1}".format(
-                options.author_pattern, e))
+        # Only build a regular expression object when we've been configured
+        # with a pattern that doesn't match all strings. This naively just
+        # checks for the default empty pattern string as well as `.*`.
+        if options.author_pattern and options.author_pattern != '.*':
+            try:
+                cls.options['pattern'] = re.compile(options.author_pattern)
+            except re.error as e:
+                raise ValueError("author-pattern: '{0}': {1}".format(
+                    options.author_pattern, e))
 
     def find_author_node(self, tree):
         for node in tree.body:
@@ -85,7 +89,8 @@ class Checker(object):
             message = 'A401 __author__ attributes are not allowed'
             yield node.lineno, node.col_offset, message, type(self)
 
-        elif node and not self.options['pattern'].match(node.value.s):
+        elif (node and 'pattern' in self.options and
+                not self.options['pattern'].match(node.value.s)):
             message = ('A402 __author__ value "{0}" does not match "{1}"'
                        .format(node.value.s, self.options['pattern'].pattern))
             yield node.lineno, node.col_offset, message, type(self)

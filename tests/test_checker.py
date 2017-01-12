@@ -57,6 +57,7 @@ class TestChecker(unittest.TestCase):
     def test_author_pattern(self):
         author = 'Jon Parise <jon@example.com>'
         self.assertIsNone(check(author))
+        self.assertIsNone(check(author, pattern=r''))
         self.assertIsNone(check(author, pattern=r'.*'))
 
     def test_author_pattern_not_matched(self):
