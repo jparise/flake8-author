@@ -27,7 +27,7 @@ using a configurable pattern.
    :target: https://travis-ci.org/jparise/flake8-author
 .. |PyPI Version| image:: https://img.shields.io/pypi/v/flake8-author.svg
    :target: https://pypi.python.org/pypi/flake8-author
-.. |Python Versions| image:: https://img.shields.io/pypi/pyversions/flake8-author.png
+.. |Python Versions| image:: https://img.shields.io/pypi/pyversions/flake8-author.svg
    :target: https://pypi.python.org/pypi/flake8-author
 
 
@@ -46,7 +46,7 @@ that it has been loaded by inspecting the ``flake8 --version`` string.
 .. code-block:: sh
 
     $ flake8 --version
-    3.0.4 (mccabe: 0.5.2, pyflakes: 1.2.3, pycodestyle: 2.0.0, author: 1.1.1) CPython 2.7.12 on Darwin
+    3.2.1 (author: 1.1.2, pyflakes: 1.2.3, pycodestyle: 2.0.0, mccabe: 0.5.3) CPython 2.7.13 on Darwin
 
 
 Error Codes
