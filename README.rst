@@ -56,7 +56,7 @@ This extension adds three new `error codes`_ (using the ``A40`` prefix):
 
 - ``A400``: a module-level ``__author__`` attribute is required
 - ``A401``: ``__author__`` attributes are not allowed
-- ``A402``: ``__author__`` attribute value does not match pattern
+- ``A402``: ``__author__`` attribute value does not match *pattern*
 
 .. _error codes: http://flake8.pycqa.org/en/latest/user/error-codes.html
 
