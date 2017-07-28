@@ -29,7 +29,6 @@ setup(
         'flake8.extension': ['A40 = flake8_author:Checker'],
     },
     install_requires=['flake8'],
-    setup_requires=['flake8'],
     tests_require=['flake8>=3.0.0'],
     test_suite='tests',
     zip_safe=True,
