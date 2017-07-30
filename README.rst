@@ -20,8 +20,8 @@ __ https://mail.python.org/pipermail/python-dev/2001-March/013328.html
 This extension can therefore be configured to explicitly require or forbid
 ``__author__`` attributes. By default, ``__author__`` is considered optional.
 
-If the ``__author__`` attribute is allowed, it's value can also be validated
-using a configurable pattern.
+If the ``__author__`` attribute is allowed, its value can also be validated
+using a configurable regular expression pattern.
 
 .. |Build Status| image::  https://img.shields.io/travis/jparise/flake8-author.svg
    :target: https://travis-ci.org/jparise/flake8-author
