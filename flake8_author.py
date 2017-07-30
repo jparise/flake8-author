@@ -26,7 +26,6 @@ class Checker(object):
 
     def __init__(self, tree, filename):
         self.tree = tree
-        self.filename = filename
 
     @classmethod
     def add_options(cls, parser):
