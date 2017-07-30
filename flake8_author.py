@@ -3,7 +3,7 @@
 This extension can be configured to explicitly require or forbid __author__
 attributes. By default, __author__ is optional.
 
-If the __author__ attribute is allowed, it's value will be validated against a
+If the __author__ attribute is allowed, its value will be validated against a
 configurable regular expression pattern (defaults to '.*').
 """
 
@@ -11,7 +11,7 @@ import ast
 import re
 
 __author__ = 'Jon Parise'
-__version__ = '1.1.3'
+__version__ = '1.1.4'
 
 
 class Checker(object):
