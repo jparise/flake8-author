@@ -14,13 +14,13 @@ def make_linter(code, path='example.py', argv=None):
 
 
 def check(author, attribute=None, pattern=None):
-    code = '__author__ = "{}"'.format(author) if author else ''
+    code = '__author__ = "{0}"'.format(author) if author else ''
 
     argv = []
     if attribute:
-        argv.append('--author-attribute={}'.format(attribute))
+        argv.append('--author-attribute={0}'.format(attribute))
     if pattern:
-        argv.append('--author-pattern={}'.format(pattern))
+        argv.append('--author-pattern={0}'.format(pattern))
 
     linter = make_linter(code, argv=argv)
     return next(linter.run(), None)
@@ -70,6 +70,7 @@ class TestChecker(unittest.TestCase):
     def test_author_pattern_invalid_regex(self):
         with self.assertRaises(ValueError):
             check('Jon Parise', pattern=r'[[[')
+
 
 if __name__ == '__main__':
     unittest.main()
