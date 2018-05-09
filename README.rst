@@ -2,7 +2,7 @@
 Flake8 __author__ Checker
 =========================
 
-|Build Status| |PyPI Version| |Python Versions|
+|PyPI Version| |Python Versions|
 
 ``flake8-author`` is a `Flake8 <http://flake8.pycqa.org/>`_ extension that
 checks Python modules for module-level ``__author__`` attributes.
@@ -23,8 +23,6 @@ This extension can therefore be configured to explicitly require or forbid
 If the ``__author__`` attribute is allowed, its value can also be validated
 using a configurable regular expression pattern.
 
-.. |Build Status| image::  https://img.shields.io/travis/jparise/flake8-author.svg
-   :target: https://travis-ci.org/jparise/flake8-author
 .. |PyPI Version| image:: https://img.shields.io/pypi/v/flake8-author.svg
    :target: https://pypi.python.org/pypi/flake8-author
 .. |Python Versions| image:: https://img.shields.io/pypi/pyversions/flake8-author.svg
