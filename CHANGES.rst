@@ -1,6 +1,12 @@
 Changes
 =======
 
+1.2.0 (2020-10-12)
+------------------
+
+* Drop Python 3.5 support and add version 3.8. and 3.9.
+* Minor documentation improvements.
+
 1.1.4 (2017-07-29)
 ------------------
 

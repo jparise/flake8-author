@@ -44,7 +44,7 @@ that it has been loaded by inspecting the ``flake8 --version`` string.
 .. code-block:: sh
 
     $ flake8 --version
-    3.4.1 (author: 1.1.4, mccabe: 0.6.1, pycodestyle: 2.3.1, pyflakes: 1.5.0) CPython 2.7.13 on Darwin
+    3.8.4 (author: 1.2.0, ...) CPython 3.8.6 on Darwin
 
 
 Error Codes
