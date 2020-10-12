@@ -69,7 +69,7 @@ class TestChecker(unittest.TestCase):
 
     def test_author_pattern_invalid_regex(self):
         with self.assertRaises(ValueError):
-            check('Jon Parise', pattern=r'[[[')
+            check('Jon Parise', pattern=r'\[[')
 
 
 if __name__ == '__main__':
