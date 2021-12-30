@@ -11,7 +11,7 @@ import ast
 import re
 
 __author__ = 'Jon Parise'
-__version__ = '1.2.0'
+__version__ = '2.0.0'
 
 
 class Checker(object):
@@ -29,12 +29,7 @@ class Checker(object):
 
     @classmethod
     def add_options(cls, parser):
-        extra_kwargs = {}
-        if hasattr(parser, 'config_options'):  # flake8 < 3.0
-            parser.config_options.append('author-attribute')
-            parser.config_options.append('author-pattern')
-        else:  # flake8 >= 3.0
-            extra_kwargs['parse_from_config'] = True
+        extra_kwargs = {'parse_from_config': True}
 
         parser.add_option(
             '--author-attribute',
