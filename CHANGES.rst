@@ -1,10 +1,16 @@
 Changes
 =======
 
+2.0.0 (2021-12-30)
+------------------
+
+* Drop support for Python 2.7 and 3.6, and add 3.10.
+* Drop support for flake8 2.x versions.
+
 1.2.0 (2020-10-12)
 ------------------
 
-* Drop Python 3.5 support and add version 3.8. and 3.9.
+* Drop Python 3.5 support and add versions 3.8 and 3.9.
 * Minor documentation improvements.
 
 1.1.4 (2017-07-29)

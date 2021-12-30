@@ -44,7 +44,7 @@ that it has been loaded by inspecting the ``flake8 --version`` string.
 .. code-block:: sh
 
     $ flake8 --version
-    3.8.4 (author: 1.2.0, ...) CPython 3.8.6 on Darwin
+    4.0.1 (author: 2.0.0, ...) CPython 3.9.9 on Darwin
 
 
 Error Codes
@@ -56,7 +56,7 @@ This extension adds three new `error codes`__ (using the ``A40`` prefix):
 - ``A401``: ``__author__`` attributes are not allowed
 - ``A402``: ``__author__`` attribute value does not match *pattern*
 
-.. __: http://flake8.pycqa.org/en/latest/user/error-codes.html
+__ http://flake8.pycqa.org/en/latest/user/error-codes.html
 
 Configuration
 -------------
