@@ -67,6 +67,25 @@ class TestChecker(unittest.TestCase):
         self.assertEqual(offset, 0)
         self.assertTrue(message.startswith('A402'))
 
+    def test_multi_author_pattern(self):
+        author = [
+            'Jon Parise <jon@example.com>',
+            'Jesse Boswell <jesse@example.com>',
+        ]
+        self.assertIsNone(check(author))
+        self.assertIsNone(check(author, pattern=r''))
+        self.assertIsNone(check(author, pattern=r'.*'))
+
+    def test_multi_author_pattern_not_matched(self):
+        author = [
+            'Jon Parise <jon@example.com>',
+            'Jesse Boswell <jesse@example.com>',
+        ]
+        lineno, offset, message, _ = check(author, pattern=r'^[\w\s]+$')
+        self.assertEqual(lineno, 1)
+        self.assertEqual(offset, 0)
+        self.assertTrue(message.startswith('A402'))
+
     def test_author_pattern_invalid_regex(self):
         with self.assertRaises(ValueError):
             check('Jon Parise', pattern=r'\[[')

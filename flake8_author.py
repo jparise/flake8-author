@@ -83,8 +83,14 @@ class Checker(object):
             message = 'A401 __author__ attributes are not allowed'
             yield node.lineno, node.col_offset, message, type(self)
 
-        elif (node and 'pattern' in self.options and
-                not self.options['pattern'].match(node.value.s)):
-            message = ('A402 __author__ value "{0}" does not match "{1}"'
-                       .format(node.value.s, self.options['pattern'].pattern))
-            yield node.lineno, node.col_offset, message, type(self)
+        elif (node and 'pattern' in self.options):
+            if isinstance(node.value.s, list):
+                for author in node.value.s:
+                    if not self.options['pattern'].match(author):
+                        message = ('A402 __author__ value "{0}" does not match "{1}"'
+                                   .format(author, self.options['pattern'].pattern))
+                        yield node.lineno, node.col_offset, message, type(self)
+            elif not self.options['pattern'].match(node.value.s):
+                message = ('A402 __author__ value "{0}" does not match "{1}"'
+                           .format(node.value.s, self.options['pattern'].pattern))
+                yield node.lineno, node.col_offset, message, type(self)
