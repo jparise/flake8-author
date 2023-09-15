@@ -14,7 +14,11 @@ def make_linter(code, path='example.py', argv=None):
 
 
 def check(author, attribute=None, pattern=None):
-    code = '__author__ = "{0}"'.format(author) if author else ''
+    code = ''
+    if author and isinstance(author, list):
+        code = '__author__ = {0}'.format(author)
+    elif author:
+        code = '__author__ = "{0}"'.format(author)
 
     argv = []
     if attribute:
@@ -23,6 +27,9 @@ def check(author, attribute=None, pattern=None):
         argv.append('--author-pattern={0}'.format(pattern))
 
     linter = make_linter(code, argv=argv)
+    if isinstance(author, list):
+        result = list(linter.run())
+        return result if len(result) else None
     return next(linter.run(), None)
 
 
@@ -76,15 +83,33 @@ class TestChecker(unittest.TestCase):
         self.assertIsNone(check(author, pattern=r''))
         self.assertIsNone(check(author, pattern=r'.*'))
 
+    def test_multi_author_pattern_partial_match(self):
+        author = [
+            'Jon Parise <jon@example.com>',
+            'Jesse Boswell <jesse@badexample.com>',
+        ]
+        results = check(author, pattern=r'^.+?@example.com>$')
+        self.assertIsNotNone(results)
+        self.assertEqual(len(results), 1)
+        for result in results:
+            lineno, offset, message, _ = result
+            self.assertEqual(lineno, 1)
+            self.assertEqual(offset, 0)
+            self.assertTrue(message.startswith('A402'))
+
     def test_multi_author_pattern_not_matched(self):
         author = [
             'Jon Parise <jon@example.com>',
             'Jesse Boswell <jesse@example.com>',
         ]
-        lineno, offset, message, _ = check(author, pattern=r'^[\w\s]+$')
-        self.assertEqual(lineno, 1)
-        self.assertEqual(offset, 0)
-        self.assertTrue(message.startswith('A402'))
+        results = check(author, pattern=r'^[\w\s]+$')
+        self.assertIsNotNone(results)
+        self.assertEqual(len(results), 2)
+        for result in results:
+            lineno, offset, message, _ = result
+            self.assertEqual(lineno, 1)
+            self.assertEqual(offset, 0)
+            self.assertTrue(message.startswith('A402'))
 
     def test_author_pattern_invalid_regex(self):
         with self.assertRaises(ValueError):
