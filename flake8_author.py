@@ -90,10 +90,19 @@ class Checker(object):
             if isinstance(node.value, ast.List):
                 for author in ast.literal_eval(node.value):
                     if not self.options['pattern'].match(author):
-                        message = ('A402 __author__ value "{0}" does not match "{1}"'
-                                   .format(author, self.options['pattern'].pattern))
-                        yield node.lineno, node.col_offset, message, type(self)
+                        message = (
+                            'A402 __author__ value "{0}" does not match "{1}"'
+                            .format(author, self.options['pattern'].pattern)
+                        )
+                        yield (
+                            node.lineno,
+                            node.col_offset,
+                            message,
+                            type(self)
+                        )
             elif not self.options['pattern'].match(node.value.s):
-                message = ('A402 __author__ value "{0}" does not match "{1}"'
-                           .format(node.value.s, self.options['pattern'].pattern))
+                message = (
+                    'A402 __author__ value "{0}" does not match "{1}"'
+                    .format(node.value.s, self.options['pattern'].pattern)
+                )
                 yield node.lineno, node.col_offset, message, type(self)
