@@ -44,7 +44,10 @@ class Checker(object):
             **extra_kwargs)
 
     @classmethod
-    def parse_options(cls, options):
+    def parse_options(cls, options, reset=True):
+        if reset:
+            cls.options = {}
+
         if options.author_attribute in cls.attribute_choices:
             cls.options['attribute'] = options.author_attribute
         else:
@@ -84,8 +87,8 @@ class Checker(object):
             yield node.lineno, node.col_offset, message, type(self)
 
         elif (node and 'pattern' in self.options):
-            if isinstance(node.value.s, list):
-                for author in node.value.s:
+            if isinstance(node.value, ast.List):
+                for author in ast.literal_eval(node.value):
                     if not self.options['pattern'].match(author):
                         message = ('A402 __author__ value "{0}" does not match "{1}"'
                                    .format(author, self.options['pattern'].pattern))
