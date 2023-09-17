@@ -63,10 +63,6 @@ class Checker(object):
                 raise ValueError("author-pattern: '{0}': {1}".format(
                     options.author_pattern, e))
 
-    @classmethod
-    def reset_options(cls):
-        cls.options = {}
-
     def find_author_node(self, tree):
         for node in tree.body:
             if not isinstance(node, ast.Assign):

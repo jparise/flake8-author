@@ -14,7 +14,6 @@ def make_linter(code, path='example.py', argv=None):
 
 
 def check(author, attribute=None, pattern=None):
-    Checker.reset_options()
     code = ''
     if author and (isinstance(author, list) or isinstance(author, tuple)):
         code = '__author__ = {0}'.format(author)
@@ -35,6 +34,9 @@ def check(author, attribute=None, pattern=None):
 
 
 class TestChecker(unittest.TestCase):
+
+    def tearDown(self):
+        Checker.options = {}
 
     def test_author_optional(self):
         self.assertIsNone(check('', attribute='optional'))
