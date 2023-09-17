@@ -76,6 +76,25 @@ class Checker(object):
                 if isinstance(target, ast.Name) and target.id == '__author__':
                     return node
 
+    def _match_a402(self, author, node):
+        if not self.options['pattern'].match(author):
+            message = (
+                'A402 __author__ value "{0}" does not match "{1}"'.format(author, self.options['pattern'].pattern))
+            yield (
+                node.lineno,
+                node.col_offset,
+                message,
+                type(self)
+            )
+        
+    def _check_a402(self, node):
+            if isinstance(node.value, ast.List):
+                for author in ast.literal_eval(node.value):
+                    yield from self._match_a402(author, node)
+            else:
+                yield from self._match_a402(node.value.s, node)
+
+
     def run(self):
         node = self.find_author_node(self.tree)
 
@@ -87,23 +106,6 @@ class Checker(object):
             message = 'A401 __author__ attributes are not allowed'
             yield node.lineno, node.col_offset, message, type(self)
 
-        elif (node and 'pattern' in self.options):
-            if isinstance(node.value, ast.List):
-                for author in ast.literal_eval(node.value):
-                    if not self.options['pattern'].match(author):
-                        message = (
-                            'A402 __author__ value "{0}" does not match "{1}"'
-                            .format(author, self.options['pattern'].pattern)
-                        )
-                        yield (
-                            node.lineno,
-                            node.col_offset,
-                            message,
-                            type(self)
-                        )
-            elif not self.options['pattern'].match(node.value.s):
-                message = (
-                    'A402 __author__ value "{0}" does not match "{1}"'
-                    .format(node.value.s, self.options['pattern'].pattern)
-                )
-                yield node.lineno, node.col_offset, message, type(self)
+        elif node and 'pattern' in self.options:
+            yield from self._check_a402(node)
+                
