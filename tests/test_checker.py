@@ -16,7 +16,7 @@ def make_linter(code, path='example.py', argv=None):
 def check(author, attribute=None, pattern=None):
     Checker.reset_options()
     code = ''
-    if author and isinstance(author, list):
+    if author and (isinstance(author, list) or isinstance(author, tuple)):
         code = '__author__ = {0}'.format(author)
     elif author:
         code = '__author__ = "{0}"'.format(author)
@@ -28,7 +28,7 @@ def check(author, attribute=None, pattern=None):
         argv.append('--author-pattern={0}'.format(pattern))
 
     linter = make_linter(code, argv=argv)
-    if isinstance(author, list):
+    if isinstance(author, list) or isinstance(author, tuple):
         result = list(linter.run())
         return result if len(result) else None
     return next(linter.run(), None)
@@ -75,7 +75,7 @@ class TestChecker(unittest.TestCase):
         self.assertEqual(offset, 0)
         self.assertTrue(message.startswith('A402'))
 
-    def test_multi_author_pattern(self):
+    def test_multi_author_list_pattern(self):
         author = [
             'Jon Parise <jon@example.com>',
             'Jesse Boswell <jesse@example.com>',
@@ -84,7 +84,7 @@ class TestChecker(unittest.TestCase):
         self.assertIsNone(check(author, pattern=r''))
         self.assertIsNone(check(author, pattern=r'.*'))
 
-    def test_multi_author_pattern_partial_match(self):
+    def test_multi_author_list_pattern_partial_match(self):
         author = [
             'Jon Parise <jon@example.com>',
             'Jesse Boswell <jesse@badexample.com>',
@@ -98,11 +98,48 @@ class TestChecker(unittest.TestCase):
             self.assertEqual(offset, 0)
             self.assertTrue(message.startswith('A402'))
 
-    def test_multi_author_pattern_not_matched(self):
+    def test_multi_author_list_pattern_not_matched(self):
         author = [
             'Jon Parise <jon@example.com>',
             'Jesse Boswell <jesse@example.com>',
         ]
+        results = check(author, pattern=r'^[\w\s]+$')
+        self.assertIsNotNone(results)
+        self.assertEqual(len(results), 2)
+        for result in results:
+            lineno, offset, message, _ = result
+            self.assertEqual(lineno, 1)
+            self.assertEqual(offset, 0)
+            self.assertTrue(message.startswith('A402'))
+
+    def test_multi_author_tuple_pattern(self):
+        author = (
+            'Jon Parise <jon@example.com>',
+            'Jesse Boswell <jesse@example.com>',
+        )
+        self.assertIsNone(check(author))
+        self.assertIsNone(check(author, pattern=r''))
+        self.assertIsNone(check(author, pattern=r'.*'))
+
+    def test_multi_author_tuple_pattern_partial_match(self):
+        author = (
+            'Jon Parise <jon@example.com>',
+            'Jesse Boswell <jesse@badexample.com>',
+        )
+        results = check(author, pattern=r'^.+?@example.com>$')
+        self.assertIsNotNone(results)
+        self.assertEqual(len(results), 1)
+        for result in results:
+            lineno, offset, message, _ = result
+            self.assertEqual(lineno, 1)
+            self.assertEqual(offset, 0)
+            self.assertTrue(message.startswith('A402'))
+
+    def test_multi_author_tuple_pattern_not_matched(self):
+        author = (
+            'Jon Parise <jon@example.com>',
+            'Jesse Boswell <jesse@example.com>',
+        )
         results = check(author, pattern=r'^[\w\s]+$')
         self.assertIsNotNone(results)
         self.assertEqual(len(results), 2)
