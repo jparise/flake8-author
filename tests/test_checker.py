@@ -14,6 +14,7 @@ def make_linter(code, path='example.py', argv=None):
 
 
 def check(author, attribute=None, pattern=None):
+    Checker.reset_options()
     code = ''
     if author and isinstance(author, list):
         code = '__author__ = {0}'.format(author)

@@ -44,10 +44,7 @@ class Checker(object):
             **extra_kwargs)
 
     @classmethod
-    def parse_options(cls, options, reset=True):
-        if reset:
-            cls.options = {}
-
+    def parse_options(cls, options):
         if options.author_attribute in cls.attribute_choices:
             cls.options['attribute'] = options.author_attribute
         else:
@@ -65,6 +62,10 @@ class Checker(object):
             except re.error as e:
                 raise ValueError("author-pattern: '{0}': {1}".format(
                     options.author_pattern, e))
+
+    @classmethod
+    def reset_options(cls):
+        cls.options = {}
 
     def find_author_node(self, tree):
         for node in tree.body:
