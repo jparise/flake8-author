@@ -97,11 +97,7 @@ class Checker(object):
             yield node.lineno, node.col_offset, message, type(self)
 
         elif node and 'pattern' in self.options:
-            if (
-                isinstance(node.value, ast.List) or
-                isinstance(node.value, ast.Tuple) or
-                isinstance(node.value, ast.Set)
-            ):
+            if isinstance(node.value, (ast.List, ast.Tuple, ast.Set)):
                 for author in ast.literal_eval(node.value):
                     yield from self._match_author_pattern(author, node)
             else:

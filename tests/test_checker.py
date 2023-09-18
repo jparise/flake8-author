@@ -15,11 +15,7 @@ def make_linter(code, path='example.py', argv=None):
 
 def check(author, attribute=None, pattern=None):
     code = ''
-    if (
-        isinstance(author, list) or
-        isinstance(author, tuple) or
-        isinstance(author, set)
-    ):
+    if isinstance(author, (list, tuple, set)):
         code = '__author__ = {0}'.format(author)
     elif author:
         code = '__author__ = "{0}"'.format(author)
@@ -31,11 +27,7 @@ def check(author, attribute=None, pattern=None):
         argv.append('--author-pattern={0}'.format(pattern))
 
     linter = make_linter(code, argv=argv)
-    if (
-        isinstance(author, list) or
-        isinstance(author, tuple) or
-        isinstance(author, set)
-    ):
+    if isinstance(author, (list, tuple, set)):
         result = list(linter.run())
         return result if len(result) else None
     return next(linter.run(), None)
