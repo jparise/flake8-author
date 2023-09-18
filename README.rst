@@ -23,6 +23,9 @@ This extension can therefore be configured to explicitly require or forbid
 If the ``__author__`` attribute is allowed, its value can also be validated
 using a configurable regular expression pattern.
 
+The ``__author__`` attribute is generally assigned to a string, but multiple
+authors can be listed using a list (or tuple or set) of strings.
+
 .. |PyPI Version| image:: https://img.shields.io/pypi/v/flake8-author.svg
    :target: https://pypi.python.org/pypi/flake8-author
 .. |Python Versions| image:: https://img.shields.io/pypi/pyversions/flake8-author.svg
@@ -44,7 +47,7 @@ that it has been loaded by inspecting the ``flake8 --version`` string.
 .. code-block:: sh
 
     $ flake8 --version
-    4.0.1 (author: 2.0.0, ...) CPython 3.9.9 on Darwin
+    6.1.0 (author: 2.1.0, ...) CPython 3.11.5 on Darwin
 
 
 Error Codes

@@ -1,6 +1,14 @@
 Changes
 =======
 
+2.1.0 (2023-09-17)
+------------------
+
+* Drop support for Python 3.7, and add 3.11.
+* Multiple authors can be listed by setting the ``__author__`` attribute to a
+  list (or tuple or set) of strings. Each entry will be validated against the
+  configured pattern.
+
 2.0.0 (2021-12-30)
 ------------------
 
