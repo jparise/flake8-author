@@ -33,4 +33,4 @@ jobs:
           flake8
       - name: Tests
         run: |
-          python tests/test_checker.py -v
+          python -m pytest -v
