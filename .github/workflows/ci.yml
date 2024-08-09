@@ -27,8 +27,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip setuptools
           pip install -r requirements.txt
-      - name: Tests
+      - name: Lint
         run: |
           python setup.py check --restructuredtext
           flake8
-          python setup.py test
+      - name: Tests
+        run: |
+          python -m pytest -v
