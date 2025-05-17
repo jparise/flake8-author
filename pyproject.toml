@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flake8-author"
+dynamic = ["version"]
+description = "Flake8 __author__ checker"
+authors = [
+    {name = "Jon Parise", email = "jon@indelible.org"},
+]
+readme = "README.md"
+license = {text = "MIT"}
+keywords = ["flake8", "__author__"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Framework :: Flake8",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Quality Assurance",
+]
+requires-python = ">= 3.9"
+dependencies = [
+    "flake8>=3.0.0",
+]
+
+[project.entry-points."flake8.extension"]
+A40 = "flake8_author:Checker"
+
+[project.optional-dependencies]
+dev = [
+    "flake8==7.2.0",
+    "pytest==8.3.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/jparise/flake8-author"
+Repository = "https://github.com/jparise/flake8-author"
+Issues = "https://github.com/jparise/flake8-author/issues"
+Changelog = "https://github.com/jparise/flake8-author/blob/main/CHANGES.rst"
+
+[tools.setuptools]
+py-modules = ["flake8_author"]
+
+[tool.setuptools.dynamic]
+version = {attr = "flake8_author.__version__"}
