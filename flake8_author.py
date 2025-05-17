@@ -101,4 +101,4 @@ class Checker(object):
                 for author in ast.literal_eval(node.value):
                     yield from self._match_author_pattern(author, node)
             else:
-                yield from self._match_author_pattern(node.value.s, node)
+                yield from self._match_author_pattern(node.value.value, node)
