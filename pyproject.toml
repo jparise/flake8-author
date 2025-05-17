@@ -48,8 +48,5 @@ Repository = "https://github.com/jparise/flake8-author"
 Issues = "https://github.com/jparise/flake8-author/issues"
 Changelog = "https://github.com/jparise/flake8-author/blob/main/CHANGES.rst"
 
-[tools.setuptools]
-py-modules = ["flake8_author"]
-
 [tool.setuptools.dynamic]
 version = {attr = "flake8_author.__version__"}
