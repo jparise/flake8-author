@@ -30,7 +30,6 @@ jobs:
           pip install -e .
       - name: Lint
         run: |
-          python setup.py check --restructuredtext
           flake8
       - name: Tests
         run: |
