@@ -9,10 +9,12 @@ configurable regular expression pattern (defaults to '.*').
 
 import ast
 import re
-from typing import Literal, Optional
+from typing import Literal, Optional, get_args
 
 __author__ = "Jon Parise"
 __version__ = "2.1.0"
+
+AttributePolicy = Literal["optional", "required", "forbidden"]
 
 
 class Checker(object):
@@ -22,11 +24,8 @@ class Checker(object):
     version = __version__
 
     # Options
-    attribute: Literal["optional", "required", "forbidden"] = "optional"
+    attribute: AttributePolicy = "optional"
     pattern: Optional[re.Pattern] = None
-
-    # Attribute existence choices
-    attribute_choices = ("optional", "required", "forbidden")
 
     def __init__(self, tree, filename):
         self.tree = tree
@@ -37,8 +36,10 @@ class Checker(object):
 
         parser.add_option(
             "--author-attribute",
-            default="optional",
-            help="__author__ attribute: {0}".format(", ".join(cls.attribute_choices)),
+            default=cls.attribute,
+            help="__author__ attribute: {0}".format(
+                ", ".join(get_args(AttributePolicy))
+            ),
             **extra_kwargs,
         )
         parser.add_option(
@@ -50,12 +51,12 @@ class Checker(object):
 
     @classmethod
     def parse_options(cls, options):
-        if options.author_attribute in cls.attribute_choices:
+        if options.author_attribute in get_args(AttributePolicy):
             cls.attribute = options.author_attribute
         else:
             raise ValueError(
                 "author-attribute: '{0}' must be one of: {1}".format(
-                    options.author_attribute, ", ".join(cls.attribute_choices)
+                    options.author_attribute, ", ".join(get_args(AttributePolicy))
                 )
             )
 
