@@ -35,7 +35,8 @@ def check(author, attribute=None, pattern=None):
 
 class TestChecker(unittest.TestCase):
     def tearDown(self):
-        Checker.options = {}
+        Checker.attribute = "optional"
+        Checker.pattern = None
 
     def test_author_optional(self):
         self.assertIsNone(check("", attribute="optional"))
