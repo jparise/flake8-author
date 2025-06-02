@@ -37,7 +37,7 @@ A40 = "flake8_author:Checker"
 
 [project.optional-dependencies]
 dev = [
-    "pytest==8.3.2",
+    "pytest==8.4.0",
     "ruff==0.11.10",
 ]
 
