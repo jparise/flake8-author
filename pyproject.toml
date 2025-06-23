@@ -32,14 +32,14 @@ dependencies = [
     "flake8>=3.0.0",
 ]
 
-[project.entry-points."flake8.extension"]
-A40 = "flake8_author:Checker"
-
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
-    "pytest==8.4.0",
+    "pytest>=8",
     "ruff==0.12.0",
 ]
+
+[project.entry-points."flake8.extension"]
+A40 = "flake8_author:Checker"
 
 [project.urls]
 Homepage = "https://github.com/jparise/flake8-author"
