@@ -12,7 +12,7 @@ import re
 from typing import Literal, Optional, get_args
 
 __author__ = "Jon Parise"
-__version__ = "2.1.0"
+__version__ = "2.2.0"
 
 AttributePolicy = Literal["optional", "required", "forbidden"]
 

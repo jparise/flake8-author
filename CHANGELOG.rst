@@ -1,6 +1,12 @@
 Changes
 =======
 
+2.2.0 (2025-07-08)
+------------------
+
+* Drop support for Python 3.8, add 3.12 and 3.13.
+* Migrate project to modern packaging metadata.
+
 2.1.0 (2023-09-17)
 ------------------
 
