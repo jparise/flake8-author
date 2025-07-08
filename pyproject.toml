@@ -45,7 +45,7 @@ A40 = "flake8_author:Checker"
 Homepage = "https://github.com/jparise/flake8-author"
 Repository = "https://github.com/jparise/flake8-author"
 Issues = "https://github.com/jparise/flake8-author/issues"
-Changelog = "https://github.com/jparise/flake8-author/blob/main/CHANGES.rst"
+Changelog = "https://github.com/jparise/flake8-author/blob/main/CHANGELOG.rst"
 
 [tool.setuptools.dynamic]
 version = {attr = "flake8_author.__version__"}
