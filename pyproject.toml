@@ -35,7 +35,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "pytest>=8",
-    "ruff==0.12.0",
+    "ruff==0.13.0",
 ]
 
 [project.entry-points."flake8.extension"]
