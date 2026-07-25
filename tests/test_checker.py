@@ -2,6 +2,7 @@ import ast
 import unittest
 
 from flake8.main.application import Application
+
 from flake8_author import Checker
 
 
@@ -16,15 +17,15 @@ def make_linter(code, path="example.py", argv=None):
 def check(author, attribute=None, pattern=None):
     code = ""
     if isinstance(author, (list, tuple, set)):
-        code = "__author__ = {0}".format(author)
+        code = f"__author__ = {author}"
     elif author:
-        code = '__author__ = "{0}"'.format(author)
+        code = f'__author__ = "{author}"'
 
     argv = []
     if attribute:
-        argv.append("--author-attribute={0}".format(attribute))
+        argv.append(f"--author-attribute={attribute}")
     if pattern:
-        argv.append("--author-pattern={0}".format(pattern))
+        argv.append(f"--author-pattern={pattern}")
 
     linter = make_linter(code, argv=argv)
     if isinstance(author, (list, tuple, set)):

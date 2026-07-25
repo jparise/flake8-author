@@ -9,7 +9,7 @@ configurable regular expression pattern (defaults to '.*').
 
 import ast
 import re
-from typing import Literal, Optional, get_args
+from typing import Literal, get_args
 
 __author__ = "Jon Parise"
 __version__ = "2.2.0"
@@ -17,7 +17,7 @@ __version__ = "2.2.0"
 AttributePolicy = Literal["optional", "required", "forbidden"]
 
 
-class Checker(object):
+class Checker:
     """flake8 __author__ checker"""
 
     name = "author"
@@ -25,7 +25,7 @@ class Checker(object):
 
     # Options
     attribute: AttributePolicy = "optional"
-    pattern: Optional[re.Pattern] = None
+    pattern: re.Pattern | None = None
 
     def __init__(self, tree, filename):
         self.tree = tree
@@ -37,7 +37,7 @@ class Checker(object):
         parser.add_option(
             "--author-attribute",
             default=cls.attribute,
-            help="__author__ attribute: {0}".format(
+            help="__author__ attribute: {}".format(
                 ", ".join(get_args(AttributePolicy))
             ),
             **extra_kwargs,
@@ -55,7 +55,7 @@ class Checker(object):
             cls.attribute = options.author_attribute
         else:
             raise ValueError(
-                "author-attribute: '{0}' must be one of: {1}".format(
+                "author-attribute: '{}' must be one of: {}".format(
                     options.author_attribute, ", ".join(get_args(AttributePolicy))
                 )
             )
@@ -67,9 +67,7 @@ class Checker(object):
             try:
                 cls.pattern = re.compile(options.author_pattern)
             except re.error as e:
-                raise ValueError(
-                    "author-pattern: '{0}': {1}".format(options.author_pattern, e)
-                )
+                raise ValueError(f"author-pattern: '{options.author_pattern}': {e}")
 
     def find_author_node(self, tree):
         for node in tree.body:
@@ -82,9 +80,7 @@ class Checker(object):
 
     def _match_author_pattern(self, author, node):
         if self.pattern is not None and not self.pattern.match(author):
-            message = 'A402 __author__ value "{0}" does not match "{1}"'.format(
-                author, self.pattern.pattern
-            )
+            message = f'A402 __author__ value "{author}" does not match "{self.pattern.pattern}"'
             yield (node.lineno, node.col_offset, message, type(self))
 
     def run(self):
