@@ -12,9 +12,10 @@ import re
 from typing import Literal, get_args
 
 __author__ = "Jon Parise"
-__version__ = "2.2.0"
+__version__ = "2.3.0"
 
 AttributePolicy = Literal["optional", "required", "forbidden"]
+ATTRIBUTE_POLICIES = get_args(AttributePolicy)
 
 
 class Checker:
@@ -37,9 +38,7 @@ class Checker:
         parser.add_option(
             "--author-attribute",
             default=cls.attribute,
-            help="__author__ attribute: {}".format(
-                ", ".join(get_args(AttributePolicy))
-            ),
+            help=f"__author__ attribute: {', '.join(ATTRIBUTE_POLICIES)}",
             **extra_kwargs,
         )
         parser.add_option(
@@ -51,14 +50,14 @@ class Checker:
 
     @classmethod
     def parse_options(cls, options):
-        if options.author_attribute in get_args(AttributePolicy):
+        if options.author_attribute in ATTRIBUTE_POLICIES:
             cls.attribute = options.author_attribute
         else:
             raise ValueError(
-                "author-attribute: '{}' must be one of: {}".format(
-                    options.author_attribute, ", ".join(get_args(AttributePolicy))
-                )
+                f"author-attribute: '{options.author_attribute}' must be one of: {', '.join(ATTRIBUTE_POLICIES)}"
             )
+
+        cls.pattern = None
 
         # Only build a regular expression object when we've been configured
         # with a pattern that doesn't match all strings. This naively just
