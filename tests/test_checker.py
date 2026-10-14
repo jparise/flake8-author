@@ -193,6 +193,10 @@ class TestChecker(unittest.TestCase):
         with self.assertRaises(ValueError):
             check("Jon Parise", pattern=r"\[[")
 
+    def test_author_pattern_resets_to_default(self):
+        self.assertIsNotNone(check("Jon Parise <jon@example.com>", pattern=r"^[\w\s]+$"))
+        self.assertIsNone(check("Jon Parise <jon@example.com>"))
+
 
 if __name__ == "__main__":
     unittest.main()
